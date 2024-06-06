@@ -1,157 +1,52 @@
 <template>
-  <div>
-    <div class="book-card-detail-wrapper">
-      <div class="card">
-        <div class="circle" style="--clr:#fd7015;">
-          <img :src="books?.items?.[0]?.volumeInfo?.imageLinks?.smallThumbnail" class="logo" alt="img">
+  <div class="main-container">
+    <div>
+      <div>
+        <h2>TITLE: {{ book?.items?.[0]?.volumeInfo?.title }}</h2>
+        <img :src="book?.items?.[0]?.volumeInfo?.imageLinks?.smallThumbnail" class="logo" alt="img">
+        <div>
+          <h2>AUTHORS: </h2>
+          <p v-for="author in book?.items?.[0]?.volumeInfo?.authors" class="author">{{ author }}</p>
         </div>
-        <div class="content">
-          <h2>{{books?.items?.[0]?.volumeInfo?.title}}</h2>
-          <p>Saleability: {{ books?.items?.[0]?.saleInfo?.saleability}}
-          </p>
-          <a :href="books?.items?.[0]?.saleInfo?.buyLink" target="_blank">BUY LINK</a>
-        </div>
+        <h2>DESCRIPTION:</h2>
+        <p class="description" v-html="book?.items?.[0]?.volumeInfo?.description"></p>
       </div>
     </div>
-    <div v-html="books?.items?.[0]?.volumeInfo?.description"></div>
   </div>
-
-
 </template>
+
 
 <script setup>
 import {useRoute} from "vue-router";
-import {onMounted, watch} from "vue";
-import {useBooksStore} from "../stores/index.js";
+import {ref, watch} from "vue";
+import {BookService} from "../services/index.js";
 
-const {fetchBooksOrBook, books} = useBooksStore();
-const route = useRoute()
-
-onMounted(() => {
-  console.log("books?.items?.[0]?.volumeInfo?.imageLinks?.smallThumbnail",books?.items?.[0]?.volumeInfo?.imageLinks?.smallThumbnail)
-});
+const route = useRoute();
+const book = ref("")
 
 watch(() => route.params.id, (newQuery) => {
   if (newQuery) {
-    fetchBooksOrBook({q: `isbn:${newQuery}`});
+    BookService.getBook({q: `isbn:${newQuery}`}).then(res => {
+      book.value = res;
+    });
   }
 }, {immediate: true});
-
-
 </script>
 
 <style scoped>
-.book-card-detail-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  width: 100%;
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
-.card {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s;
-  transition-delay: 0.5s;
+.author {
+  font-style: italic;
+  margin-bottom: 10px;
 }
 
-.card:hover {
-  width: 600px;
-  transition-delay: 0.5s;
+.description {
+  line-height: 1.6;
 }
-
-.card .circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card .circle::before {
-  content: "";
-  position: absolute;
-  top: 30;
-  left: 2;
-  right: 2;
-  width: 470px;
-  height: 470px;
-  border-radius: 50%;
-  background: #191919;
-  border: 8px solid var(--clr);
-  filter: drop-shadow(0 0 10px var(--clr)) drop-shadow(0 0 60px var(--clr));
-  transition: 0.5s, background 0.5s;
-  transition-delay: 0.75s, 1s;
-}
-
-.card:hover .circle::before {
-  transition-delay: 0.5s;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  background: var(--clr);
-}
-
-.card .circle .logo {
-  position: relative;
-  width: 250px;
-  transition: 0.5s;
-  transition-delay: 0.5s;
-}
-
-.card:hover .circle .logo {
-  transform: scale(0);
-  transition-delay: 0s;
-}
-
-.card .content {
-  position: absolute;
-  left: 10%;
-  width: 100%;
-  opacity: 0;
-  transition: 0.5s;
-  visibility: hidden;
-}
-
-.card:hover .content {
-  transition-delay: 0.75s;
-  opacity: 1;
-  visibility: visible;
-  left: 3px;
-  margin-top: 15px;
-}
-
-.card .content h2 {
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 2em;
-  line-height: 1.3em;
-}
-
-.card .content p {
-  color: #fff;
-}
-
-.card .content a {
-  position: relative;
-  color: #fff;
-  background: #222222;
-  padding: 10px 20px;
-  border-radius: 10px;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 600;
-  margin-top: 15px;
-}
-
 </style>

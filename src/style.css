@@ -2,6 +2,20 @@
     /*  colors*/
     --dark-color: #242424;
     --white-color: #fff;
+    --loading-grey: #ededed;
+    --tableBorderColor:#dddddd;
+    --primaryColor:#007BFF;
+    --searchContentShadow:0 4px 8px rgba(0, 0, 0, 0.1);
+    --ligthColor:#f9f9f9;
+    --skeletonColor:linear-gradient(90deg, #F4F4F4 0px, rgba(229, 229, 229, 0.8) 40px, #F4F4F4 80px);
+    --skeletonBgColor:#f0f0f0;
+    --skeletonBorderColor:#ccc;
+    --skeletoneTextColor:#333;
+}
+*{
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
 }
 
 a {
@@ -15,15 +29,12 @@ a:hover {
 }
 
 body {
-    margin: 0;
     place-items: center;
-    min-width: 320px;
     min-height: 100vh;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color: var(--white-color);
-    background-color: var(--dark-color);
+    color: var(--dark-color);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -39,11 +50,10 @@ button {
     font-family: inherit;
 }
 
-#app {
+.main-container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+    padding: 0 1rem ;
 }
 
 .line-3 {

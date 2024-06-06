@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>NotFound Page</h1>
+    <h1>NotFound Page - (404)</h1>
     <p>This is the NotFound Page!</p>
   </div>
 </template>
@@ -12,5 +12,4 @@ export default {
 </script>
 
 <style scoped>
-/* Add styles here if needed */
 </style>
