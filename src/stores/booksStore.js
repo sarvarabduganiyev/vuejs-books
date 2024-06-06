@@ -4,18 +4,18 @@ import { BookService } from "../services";
 export const useBooksStore = defineStore('books', {
     state: () => ({
         books: [],
-        loading: false, // Add a loading state
+        loading: false,
     }),
     actions: {
         async findBooks(searchQuery) {
-            this.loading = true; // Set loading to true when the request starts
+            this.loading = true;
             try {
                 const response = await BookService.getBook(searchQuery);
                 this.books = response;
             } catch (error) {
                 console.error('Failed to fetch books', error);
             } finally {
-                this.loading = false; // Set loading to false when the request completes
+                this.loading = false;
             }
         },
     },

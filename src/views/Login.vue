@@ -25,7 +25,7 @@ import {useAuthStore} from "../stores/authStore.js";
 import {useRouter} from "vue-router";
 import {ref} from 'vue';
 import {useToast} from 'vue-toast-notification'
-import {kirillRegex, LOGIN_INPUT_MAX_LENGTH, numberRegex, symbolRegex} from "../config/default-config.js";
+import { cyrillicRegex, LOGIN_INPUT_MAX_LENGTH, numberRegex, symbolRegex} from "../config/default-config.js";
 
 
 export default {
@@ -41,7 +41,7 @@ export default {
         return toast.error(`The entered value does not contain  ${LOGIN_INPUT_MAX_LENGTH} characters!`, {position: "top-right"});
       }
 
-      if (kirillRegex.test(formData.value) || symbolRegex.test(formData.value) || numberRegex.test(formData.value)) {
+      if ( cyrillicRegex.test(formData.value) || symbolRegex.test(formData.value) || numberRegex.test(formData.value)) {
         return toast.error('The entered data contains Cyrillic alphabet or numbers or special characters!', {position: "top-right"});
       }
 
